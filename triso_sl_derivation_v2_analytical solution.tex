@@ -1,0 +1,316 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+
+\newcommand{\Bi}{\mathrm{Bi}}
+\newcommand{\dd}{\,\mathrm{d}}
+
+\title{Analytical Solution of Fission Product Diffusion in a TRISO Particle\\
+via Sturm--Liouville Theory}
+\author{Ray}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+An analytical benchmark solution is derived for the transient diffusion of fission
+products in a spherical TRISO particle with a constant volumetric source, zero initial
+inventory, and a convective (Robin) boundary condition at the outer surface. The problem
+is solved by Sturm--Liouville eigenfunction expansion for a single homogeneous sphere,
+including the shutdown scenario in which the source is switched off at a finite time
+$t_c$ (control rod insertion). The extension to the full five-layer particle (kernel,
+buffer, IPyC, SiC, OPyC) with continuity of concentration and flux at the interfaces is
+formulated in the final section.
+\end{abstract}
+
+\section{Problem statement}
+
+Let $c(r,t)$ denote the fission product concentration
+($\mathrm{mol\ m^{-3}}$) in a sphere of radius $R$ with effective diffusivity $D$
+($\mathrm{m^2\ s^{-1}}$) and constant volumetric source $S_0$
+($\mathrm{mol\ m^{-3}\ s^{-1}}$). The governing equation is
+\begin{equation}
+\frac{\partial c}{\partial t}
+= D\left(\frac{\partial^2 c}{\partial r^2} + \frac{2}{r}\frac{\partial c}{\partial r}\right) + S_0,
+\qquad 0 < r < R,\quad t > 0,
+\label{eq:pde}
+\end{equation}
+subject to
+\begin{align}
+c(r,0) &= 0, \label{eq:ic}\\
+\frac{\partial c}{\partial r}(0,t) &= 0 \quad\text{(spherical symmetry)}, \label{eq:bc0}\\
+-D\frac{\partial c}{\partial r}(R,t) &= h\,c(R,t) \quad\text{(convective release)}, \label{eq:bcR}
+\end{align}
+with mass transfer coefficient $h$ ($\mathrm{m\ s^{-1}}$). The Biot number is
+\begin{equation}
+\Bi = \frac{hR}{D}.
+\end{equation}
+The source is active for $0 \le t \le t_c$ and is switched off ($S=0$) for $t > t_c$.
+
+\section{Sturm--Liouville formulation}
+
+Using the identity
+$c_{rr} + \tfrac{2}{r}c_r = \tfrac{1}{r^2}\left(r^2 c_r\right)_r$,
+equation \eqref{eq:pde} reads
+\begin{equation}
+\frac{\partial c}{\partial t}
+= \frac{D}{r^2}\frac{\partial}{\partial r}\!\left(r^2 \frac{\partial c}{\partial r}\right) + S_0 .
+\label{eq:pde2}
+\end{equation}
+The spatial operator is of Sturm--Liouville type
+$\frac{\dd}{\dd r}\big[p\,\phi'\big] + q\phi + \lambda\sigma\phi = 0$ with
+\begin{equation}
+p(r) = r^2, \qquad q(r) = 0, \qquad \sigma(r) = r^2 .
+\label{eq:pqsigma}
+\end{equation}
+The weight $\sigma = r^2$ reflects the shell area $4\pi r^2$. Because $p(0)=0$ the
+problem is singular at the origin; the regularity condition
+$|\phi(0)| < \infty$ together with \eqref{eq:bc0} replaces the inner Robin condition,
+and the vanishing of $p$ at $r=0$ preserves self-adjointness (the boundary term of
+Green's formula vanishes there automatically).
+
+\section{Steady-state split}
+
+Since $S_0$ is time independent, write
+\begin{equation}
+c(r,t) = w(r) + v(r,t),
+\end{equation}
+where $w$ satisfies the steady problem
+$\frac{D}{r^2}\left(r^2 w'\right)' + S_0 = 0$ with boundary conditions
+\eqref{eq:bc0}--\eqref{eq:bcR}. Integrating once,
+\begin{equation}
+\left(r^2 w'\right)' = -\frac{S_0 r^2}{D}
+\;\;\Longrightarrow\;\;
+r^2 w' = -\frac{S_0 r^3}{3D} + A .
+\end{equation}
+Boundedness of $w'$ at the origin forces $A = 0$, hence $w' = -S_0 r/(3D)$ and
+$w = B - S_0 r^2/(6D)$. The Robin condition \eqref{eq:bcR} gives
+\begin{equation}
+-Dw'(R) = \frac{S_0 R}{3} = h\left(B - \frac{S_0 R^2}{6D}\right)
+\;\;\Longrightarrow\;\;
+B = \frac{S_0 R}{3h} + \frac{S_0 R^2}{6D},
+\end{equation}
+so that
+\begin{equation}
+\boxed{\;w(r) = \frac{S_0 R}{3h} + \frac{S_0}{6D}\left(R^2 - r^2\right).\;}
+\label{eq:w}
+\end{equation}
+\emph{Check (global mass balance).} At steady state the total generation
+$\tfrac{4}{3}\pi R^3 S_0$ must equal the surface outflow $4\pi R^2\, h\, w(R)$, giving
+$w(R) = S_0R/(3h)$, in agreement with \eqref{eq:w}.
+
+The transient remainder $v = c - w$ satisfies the homogeneous problem
+\begin{equation}
+v_t = \frac{D}{r^2}\left(r^2 v_r\right)_r, \qquad
+v_r(0,t)=0,\qquad -Dv_r(R,t) = h\,v(R,t), \qquad
+v(r,0) = -w(r).
+\label{eq:vproblem}
+\end{equation}
+
+\section{Eigenvalue problem}
+
+Separation $v = \phi(r)h(t)$ yields $h' = -\lambda D h$ and
+\begin{equation}
+\frac{\dd}{\dd r}\!\left(r^2\frac{\dd\phi}{\dd r}\right) + \lambda r^2 \phi = 0 .
+\label{eq:slode}
+\end{equation}
+Substituting $u(r) = r\,\phi(r)$, one finds $\left(r^2\phi'\right)' = r u''$, so
+\eqref{eq:slode} collapses to the harmonic equation
+\begin{equation}
+u'' + \lambda u = 0 .
+\end{equation}
+Regularity of $\phi = u/r$ at the origin requires $u(0)=0$, eliminating the cosine
+branch:
+\begin{equation}
+\phi(r) = \frac{\sin\!\left(\sqrt{\lambda}\,r\right)}{r}.
+\label{eq:eigfun}
+\end{equation}
+Near the origin $\phi \approx \sqrt{\lambda} - \lambda^{3/2}r^2/6$, so
+$\phi'(0)=0$ holds automatically.
+
+\paragraph{Eigencondition.} With
+$\phi'(r) = \left[\sqrt{\lambda}\,r\cos(\sqrt{\lambda} r) - \sin(\sqrt{\lambda} r)\right]/r^2$
+and $\mu = \sqrt{\lambda}\,R$, the Robin condition $-D\phi'(R) = h\phi(R)$ gives
+\begin{equation}
+\sin\mu - \mu\cos\mu = \Bi\sin\mu
+\;\;\Longrightarrow\;\;
+\boxed{\;\mu_n\cot\mu_n = 1 - \Bi,\qquad \lambda_n = \frac{\mu_n^2}{R^2}.\;}
+\label{eq:eigcond}
+\end{equation}
+Equation \eqref{eq:eigcond} has exactly one root $\mu_n$ in each interval
+$\big((n-1)\pi,\, n\pi\big)$, $n = 1,2,\dots$ Two limits are noteworthy: as
+$\Bi\to\infty$ the roots tend to $n\pi$ and the Booth sphere model is recovered; for
+$\Bi \ll 1$, expansion of $\cot\mu$ gives $\mu_1 \approx \sqrt{3\,\Bi}$
+(surface-limited release).
+
+\section{Positivity of the eigenvalues}
+
+The Rayleigh quotient for \eqref{eq:slode} with \eqref{eq:pqsigma} is
+\begin{equation}
+\lambda = \frac{-r^2\phi\phi'\big|_0^R + \displaystyle\int_0^R r^2 (\phi')^2 \dd r}
+{\displaystyle\int_0^R \phi^2 r^2 \dd r}.
+\end{equation}
+The boundary term vanishes at $r=0$ because $p(0)=0$, and at $r=R$ the Robin condition
+$\phi'(R) = -(h/D)\phi(R)$ makes it $+\,(h/D)R^2\phi(R)^2 \ge 0$. With $q=0$ it follows
+that $\lambda \ge 0$. If $\lambda = 0$, then $r^2\phi' = \text{const} = 0$ by
+regularity, so $\phi$ is constant, and $h\phi(R)=0$ with $h>0$ forces $\phi\equiv 0$.
+Hence
+\begin{equation}
+\lambda_n > 0 \quad \text{for all } n,
+\end{equation}
+and the transient decays: $c \to w$ under sustained irradiation, and $c \to 0$ after
+shutdown.
+
+\section{Orthogonality, normalization, and expansion coefficients}
+
+Let $k_n = \mu_n/R$. Sturm--Liouville theory guarantees orthogonality with respect to
+$\sigma = r^2$:
+\begin{equation}
+\int_0^R \phi_n\phi_m\, r^2 \dd r = 0, \qquad n\neq m .
+\end{equation}
+The normalization integral reduces, via $u = r\phi$, to
+\begin{equation}
+N_n = \int_0^R \phi_n^2\, r^2 \dd r
+= \int_0^R \sin^2(k_n r)\dd r
+= \frac{R}{2}\left[1 - \frac{\sin(2\mu_n)}{2\mu_n}\right]
+= \frac{R}{2}\left[1 - (1-\Bi)\frac{\sin^2\mu_n}{\mu_n^2}\right],
+\label{eq:norm}
+\end{equation}
+where the last step uses $\cos\mu_n = (1-\Bi)\sin\mu_n/\mu_n$ from \eqref{eq:eigcond}.
+
+Expanding the initial condition $v(r,0) = -w(r) = \sum_n a_n \phi_n(r)$ and projecting
+with weight $r^2$,
+\begin{equation}
+a_n = -\frac{1}{N_n}\int_0^R w(r)\, r \sin(k_n r)\dd r .
+\end{equation}
+Write $w = A - Br^2$ with $A = \frac{S_0R}{3h} + \frac{S_0R^2}{6D}$ and
+$B = \frac{S_0}{6D}$. The required integrals are
+\begin{align}
+I_1 &= \int_0^R r\sin(k r)\dd r = \frac{\sin\mu - \mu\cos\mu}{k^2}
+     = \frac{\Bi\sin\mu}{k^2}, \\
+I_3 &= \int_0^R r^3\sin(k r)\dd r
+     = \left(\frac{3R^2}{k^2} - \frac{6}{k^4}\right)\sin\mu
+       - \left(\frac{R^3}{k} - \frac{6R}{k^3}\right)\cos\mu
+     = \sin\mu\left[(2+\Bi)\frac{R^2}{k^2} - \frac{6\,\Bi}{k^4}\right],
+\end{align}
+where the eigencondition has again been used to eliminate $\cos\mu$. Then
+\begin{equation}
+\int_0^R w\, r\sin(kr)\dd r = A I_1 - B I_3 .
+\end{equation}
+Since $A\,\Bi = \frac{S_0R^2}{6D}(2+\Bi) = B(2+\Bi)R^2$, the $R^2/k^2$ contributions
+cancel identically, leaving the compact result
+\begin{equation}
+\int_0^R w\, r\sin(k_n r)\dd r = \frac{6\,\Bi\, B\sin\mu_n}{k_n^4}
+= \frac{\Bi\, S_0 \sin\mu_n}{D\,k_n^4},
+\end{equation}
+so that, with $k_n^4 = \mu_n^4/R^4$,
+\begin{equation}
+\boxed{\;a_n = -\frac{\Bi\, S_0\, R^4 \sin\mu_n}{D\,\mu_n^4\, N_n}.\;}
+\label{eq:an}
+\end{equation}
+The exact cancellation above occurs only when the steady state \eqref{eq:w} and the
+eigencondition \eqref{eq:eigcond} are mutually consistent, and therefore serves as an
+internal check on the algebra.
+
+\section{Solution with the source active ($0 \le t \le t_c$)}
+
+\begin{equation}
+\boxed{\;
+c(r,t) = \frac{S_0 R}{3h} + \frac{S_0}{6D}\left(R^2 - r^2\right)
++ \sum_{n\ge 1} a_n\,\frac{\sin(\mu_n r/R)}{r}\;
+e^{-D\mu_n^2 t/R^2},
+\;}
+\label{eq:phase1}
+\end{equation}
+with $a_n$ given by \eqref{eq:an}. At $t=0$ the series equals $-w(r)$ by construction,
+so $c(r,0)=0$ exactly. The concentration builds from zero toward the parabolic profile
+$w(r)$ on the timescale $\tau_1 = R^2/(D\mu_1^2)$. The instantaneous release rate
+through the surface is
+\begin{equation}
+\dot m(t) = 4\pi R^2\, h\, c(R,t)
+\qquad \left(\mathrm{mol\ s^{-1}}\right).
+\end{equation}
+
+\section{Solution after source switch-off ($t > t_c$)}
+
+For $t > t_c$ the PDE is homogeneous with unchanged boundary conditions, so the same
+eigenbasis applies:
+\begin{equation}
+c(r,t) = \sum_{n\ge 1} b_n\,\frac{\sin(\mu_n r/R)}{r}\;
+e^{-D\mu_n^2 (t-t_c)/R^2}.
+\end{equation}
+The new initial condition is the phase-1 state at $t_c$. Because the projection of $w$
+onto $\phi_n$ equals $-a_n$ by definition of $a_n$,
+\begin{equation}
+c(r,t_c) = \sum_n \left(-a_n + a_n e^{-D\mu_n^2 t_c/R^2}\right)\phi_n
+\;\;\Longrightarrow\;\;
+\boxed{\;b_n = a_n\left(e^{-D\mu_n^2 t_c/R^2} - 1\right).\;}
+\label{eq:bn}
+\end{equation}
+No additional integrals are required; orthogonality of the eigenbasis transfers the
+phase-1 state directly. Since $\lambda_n > 0$, the inventory decays exponentially after
+shutdown, with the late-time behaviour governed by $\mu_1$.
+
+\section{Verification summary}
+
+The solution satisfies the following checks. Dimensional consistency: $a_n$ carries
+$\mathrm{mol\ m^{-2}}$ so that $a_n\phi_n$ is a concentration. Initial condition:
+$c(r,0)=0$ holds exactly by construction of \eqref{eq:an}. Steady state: global mass
+balance fixes $w(R) = S_0R/(3h)$. Limiting case: as $\Bi\to\infty$ (perfect sink,
+$c(R)=0$) the eigencondition gives $\mu_n = n\pi$ and \eqref{eq:phase1} reduces to the
+classical Booth sphere model of fission gas release. Stability: $\lambda_n>0$ was proven
+from the Rayleigh quotient rather than assumed.
+
+\section{Extension to the five-layer particle}
+
+The full TRISO geometry comprises five concentric layers (kernel, buffer, IPyC, SiC,
+OPyC) with radii $0 = r_0 < r_1 < \dots < r_5 = R$ and piecewise constant diffusivities
+$D_i$, $i = 1,\dots,5$. The source acts in the kernel only: $S = S_0$ for
+$r < r_1$, $S = 0$ otherwise. In each layer,
+\begin{equation}
+\frac{\partial c}{\partial t}
+= \frac{D_i}{r^2}\frac{\partial}{\partial r}\!\left(r^2\frac{\partial c}{\partial r}\right)
++ S_i .
+\end{equation}
+
+\paragraph{Interface conditions.} Following the default assumption of TRISO transport
+codes, both the concentration and the radial flux are continuous at each interface:
+\begin{equation}
+c\big(r_i^-,t\big) = c\big(r_i^+,t\big), \qquad
+D_i\,\frac{\partial c}{\partial r}\Big|_{r_i^-}
+= D_{i+1}\,\frac{\partial c}{\partial r}\Big|_{r_i^+},
+\qquad i = 1,\dots,4 .
+\label{eq:interface}
+\end{equation}
+
+\paragraph{Sturm--Liouville structure.} Writing $D(r)$ for the piecewise diffusivity,
+the composite spatial problem is
+\begin{equation}
+\frac{\dd}{\dd r}\!\left(D(r)\, r^2\frac{\dd\phi}{\dd r}\right) + \lambda\, r^2\phi = 0,
+\qquad p(r) = D(r)\,r^2,\quad \sigma(r) = r^2,
+\end{equation}
+with time factor $e^{-\lambda t}$ (the diffusivity now resides in $p$, not in the time
+equation). Flux continuity \eqref{eq:interface} is precisely continuity of
+$p\,\phi'$, which is the condition under which Green's formula, and hence
+self-adjointness, orthogonality
+$\int_0^R \phi_n\phi_m\, r^2\dd r = 0$, and realness of the spectrum, survive the
+material discontinuities.
+
+\paragraph{Layer-wise eigenfunctions.} With $u = r\phi$ and
+$k_i = \sqrt{\lambda/D_i}$, each layer admits
+\begin{equation}
+u^{(i)}(r) = \alpha_i \sin(k_i r) + \beta_i \cos(k_i r),
+\end{equation}
+with $\beta_1 = 0$ by regularity at the origin. The $9$ remaining constants (up to
+normalization) satisfy $8$ interface equations from \eqref{eq:interface} and the outer
+Robin condition, a homogeneous linear system that is conveniently assembled as a product
+of $2\times 2$ transfer matrices across the layers. Nontrivial solutions exist only when
+the system determinant vanishes, which is the transcendental eigencondition
+$\det M(\lambda) = 0$ generalizing \eqref{eq:eigcond}. The steady-state split, the
+projection of $-w$ onto the eigenbasis, and the switch-off treatment
+\eqref{eq:bn} then carry over verbatim from the single-layer case.
+
+\end{document}
+                                           
