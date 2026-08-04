@@ -1,0 +1,946 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+
+\title{Analytical Solution of Fission Product Diffusion\\
+in a TRISO Particle\\[0.4em]
+\large Expanded-Notation Working}
+\author{Ray}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document reproduces the Sturm--Liouville analytical solution for transient
+fission-product diffusion in a spherical TRISO particle with a constant volumetric
+source, zero initial inventory, and a convective (Robin) surface condition, written
+throughout in fully expanded notation. Every derivative is written in Leibniz form
+(no prime notation), every intermediate algebraic step is retained, and no
+dimensionless groupings are introduced: the physical constants $D$, $h$, $R$ and
+$S_{0}$ appear explicitly in every expression. The shutdown scenario (source
+switched off at $t_{c}$) is included, and the extension to the full five-layer
+particle is formulated in the final section.
+\end{abstract}
+
+\tableofcontents
+
+\section{Notation}
+
+Two derivative symbols appear in this document, and the distinction between them is
+carried consistently.
+
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Function & Depends on & Symbol & Example \\
+\hline
+$c(r,t)$   & $r$ and $t$ & $\partial$ & $\dfrac{\partial c}{\partial t}$,\quad $\dfrac{\partial c}{\partial r}$ \\[0.9em]
+$v(r,t)$   & $r$ and $t$ & $\partial$ & $\dfrac{\partial v}{\partial t}$,\quad $\dfrac{\partial v}{\partial r}$ \\[0.9em]
+$w(r)$     & $r$ only    & $d$        & $\dfrac{dw}{dr}$ \\[0.9em]
+$\phi(r)$  & $r$ only    & $d$        & $\dfrac{d\phi}{dr}$,\quad $\dfrac{d^{2}\phi}{dr^{2}}$ \\[0.9em]
+$u(r)$     & $r$ only    & $d$        & $\dfrac{du}{dr}$,\quad $\dfrac{d^{2}u}{dr^{2}}$ \\[0.9em]
+$T(t)$     & $t$ only    & $d$        & $\dfrac{dT}{dt}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent
+The symbol $\partial$ signals that other variables are being held fixed. For a
+function of a single variable there is nothing to hold fixed, so the ordinary
+symbol $d$ is used. The change from $\partial$ to $d$ occurs at
+Section~\ref{sec:separation}, and is precisely what separation of variables
+achieves: one partial differential equation is replaced by two ordinary
+differential equations.
+
+\medskip
+\noindent
+The notation
+\begin{equation*}
+\frac{d\phi}{dr}\bigg|_{r=R}
+\end{equation*}
+means: perform the differentiation first, then substitute $r=R$ into the result.
+
+\section{Problem statement}
+
+Let $c(r,t)$ denote the fission-product concentration
+($\mathrm{mol\ m^{-3}}$) in a sphere of radius $R$ with diffusivity $D$
+($\mathrm{m^{2}\ s^{-1}}$), constant volumetric source $S_{0}$
+($\mathrm{mol\ m^{-3}\ s^{-1}}$), and surface mass-transfer coefficient $h$
+($\mathrm{m\ s^{-1}}$).
+
+\begin{equation}
+\frac{\partial c}{\partial t}
+= \frac{D}{r^{2}}\,\frac{\partial}{\partial r}\!\left(r^{2}\frac{\partial c}{\partial r}\right) + S_{0},
+\qquad 0 < r < R,\quad t > 0 .
+\label{eq:pde}
+\end{equation}
+
+Expanding the inner derivative by the product rule gives the equivalent form
+\begin{equation}
+\frac{\partial c}{\partial t}
+= D\left(\frac{\partial^{2} c}{\partial r^{2}} + \frac{2}{r}\,\frac{\partial c}{\partial r}\right) + S_{0} .
+\label{eq:pde-expanded}
+\end{equation}
+
+The initial and boundary data are
+\begin{align}
+c(r,0) &= 0 , \label{eq:ic}\\[0.3em]
+\frac{\partial c}{\partial r}\bigg|_{r=0} &= 0
+\qquad \text{(spherical symmetry)} , \label{eq:bc0}\\[0.3em]
+-D\,\frac{\partial c}{\partial r}\bigg|_{r=R} &= h\,c(R,t)
+\qquad \text{(convective release)} . \label{eq:bcR}
+\end{align}
+
+The source is active for $0 \le t \le t_{c}$ and is switched off for $t > t_{c}$.
+
+\section{Steady--transient split}
+
+\begin{equation}
+c(r,t) = w(r) + v(r,t) .
+\label{eq:split}
+\end{equation}
+
+\section{Steady solution}
+
+Setting the time derivative to zero in \eqref{eq:pde} leaves a function of $r$
+alone, so ordinary derivatives apply from here on.
+
+\begin{equation}
+\frac{D}{r^{2}}\,\frac{d}{dr}\!\left(r^{2}\frac{dw}{dr}\right) + S_{0} = 0 .
+\end{equation}
+
+Multiplying through by $r^{2}/D$,
+\begin{equation}
+\frac{d}{dr}\!\left(r^{2}\frac{dw}{dr}\right) = -\frac{S_{0}\,r^{2}}{D} .
+\end{equation}
+
+Integrating once with respect to $r$, with $A$ the constant of integration,
+\begin{equation}
+r^{2}\frac{dw}{dr} = -\frac{S_{0}\,r^{3}}{3D} + A .
+\end{equation}
+
+Dividing through by $r^{2}$,
+\begin{equation}
+\frac{dw}{dr} = -\frac{S_{0}\,r}{3D} + \frac{A}{r^{2}} .
+\end{equation}
+
+The term $A/r^{2}$ diverges as $r \to 0$, which would give unbounded flux at the
+centre and contradict \eqref{eq:bc0}. Hence
+\begin{equation}
+A = 0 ,
+\qquad\text{so}\qquad
+\frac{dw}{dr} = -\frac{S_{0}\,r}{3D} .
+\end{equation}
+
+Integrating a second time, with $B$ the second constant of integration,
+\begin{equation}
+w(r) = -\frac{S_{0}\,r^{2}}{6D} + B .
+\end{equation}
+
+Evaluating the gradient at the surface,
+\begin{equation}
+\frac{dw}{dr}\bigg|_{r=R} = -\frac{S_{0}R}{3D} ,
+\end{equation}
+and substituting into the surface condition \eqref{eq:bcR},
+\begin{equation}
+-D\,\frac{dw}{dr}\bigg|_{r=R}
+= -D\left(-\frac{S_{0}R}{3D}\right)
+= \frac{S_{0}R}{3}
+= h\,w(R)
+= h\left(B - \frac{S_{0}R^{2}}{6D}\right) .
+\end{equation}
+
+Solving for $B$,
+\begin{equation}
+B = \frac{S_{0}R}{3h} + \frac{S_{0}R^{2}}{6D} ,
+\end{equation}
+so that
+\begin{equation}
+\boxed{\;
+w(r) = \frac{S_{0}R}{3h} + \frac{S_{0}}{6D}\left(R^{2} - r^{2}\right) .
+\;}
+\label{eq:w}
+\end{equation}
+
+\section{Transient problem}
+
+Subtracting the steady part removes the source and homogenises both boundary
+conditions:
+\begin{equation}
+\frac{\partial v}{\partial t}
+= \frac{D}{r^{2}}\,\frac{\partial}{\partial r}\!\left(r^{2}\frac{\partial v}{\partial r}\right) ,
+\label{eq:vpde}
+\end{equation}
+\begin{equation}
+\frac{\partial v}{\partial r}\bigg|_{r=0} = 0 ,
+\qquad
+-D\,\frac{\partial v}{\partial r}\bigg|_{r=R} = h\,v(R,t) ,
+\qquad
+v(r,0) = -w(r) .
+\label{eq:vdata}
+\end{equation}
+
+\section{Separation of variables}
+\label{sec:separation}
+
+Seek a solution in the form of a pure product,
+\begin{equation}
+v(r,t) = \phi(r)\,T(t) .
+\end{equation}
+
+Differentiating with respect to $t$, with $r$ held fixed, the factor $\phi(r)$
+contains no $t$ and behaves as a constant multiplier:
+\begin{equation}
+\frac{\partial v}{\partial t} = \phi(r)\,\frac{dT}{dt} .
+\end{equation}
+
+Differentiating with respect to $r$, with $t$ held fixed, the factor $T(t)$
+contains no $r$ and behaves as a constant multiplier:
+\begin{equation}
+\frac{\partial v}{\partial r} = \frac{d\phi}{dr}\,T(t) .
+\end{equation}
+
+Multiplying by $r^{2}$,
+\begin{equation}
+r^{2}\frac{\partial v}{\partial r} = r^{2}\frac{d\phi}{dr}\,T(t) .
+\end{equation}
+
+Differentiating once more with respect to $r$, again factoring $T(t)$ out of the
+$r$-derivative,
+\begin{equation}
+\frac{\partial}{\partial r}\!\left(r^{2}\frac{\partial v}{\partial r}\right)
+= \frac{d}{dr}\!\left(r^{2}\frac{d\phi}{dr}\right) T(t) .
+\label{eq:sep-key}
+\end{equation}
+
+Equation \eqref{eq:sep-key} is where the notation changes: the quantity
+$r^{2}\,d\phi/dr$ contains no $t$ whatsoever, so the derivative acting on it is
+ordinary rather than partial.
+
+Substituting into \eqref{eq:vpde},
+\begin{equation}
+\phi(r)\,\frac{dT}{dt}
+= \frac{D}{r^{2}}\,\frac{d}{dr}\!\left(r^{2}\frac{d\phi}{dr}\right) T(t) .
+\end{equation}
+
+Dividing both sides by $D\,\phi(r)\,T(t)$,
+\begin{equation}
+\frac{1}{D\,T(t)}\,\frac{dT}{dt}
+= \frac{1}{r^{2}\phi(r)}\,\frac{d}{dr}\!\left(r^{2}\frac{d\phi}{dr}\right) .
+\label{eq:separated}
+\end{equation}
+
+The left-hand side of \eqref{eq:separated} depends only on $t$; the right-hand side
+depends only on $r$. Since $r$ and $t$ vary independently, both sides must equal the
+same constant, written $-\lambda$:
+\begin{equation}
+\frac{1}{D\,T(t)}\,\frac{dT}{dt}
+= \frac{1}{r^{2}\phi(r)}\,\frac{d}{dr}\!\left(r^{2}\frac{d\phi}{dr}\right)
+= -\lambda .
+\end{equation}
+
+This yields two ordinary differential equations. The time equation,
+\begin{equation}
+\frac{dT}{dt} = -\lambda D\,T(t)
+\qquad \Longrightarrow \qquad
+T(t) = e^{-\lambda D t} ,
+\label{eq:timeeq}
+\end{equation}
+and the spatial equation,
+\begin{equation}
+\frac{d}{dr}\!\left(r^{2}\frac{d\phi}{dr}\right) + \lambda\,r^{2}\phi = 0 .
+\label{eq:spatial}
+\end{equation}
+
+\section{Removal of the curvature term}
+
+Introduce
+\begin{equation}
+u(r) = r\,\phi(r) ,
+\qquad\text{equivalently}\qquad
+\phi(r) = \frac{u(r)}{r} .
+\end{equation}
+
+Differentiating $\phi = u \cdot r^{-1}$ by the product rule,
+\begin{equation}
+\frac{d\phi}{dr}
+= \frac{1}{r}\,\frac{du}{dr} + u \cdot \left(-\frac{1}{r^{2}}\right)
+= \frac{1}{r}\,\frac{du}{dr} - \frac{u}{r^{2}} .
+\end{equation}
+
+Multiplying through by $r^{2}$,
+\begin{equation}
+r^{2}\frac{d\phi}{dr} = r\,\frac{du}{dr} - u .
+\label{eq:r2phi}
+\end{equation}
+
+Differentiating \eqref{eq:r2phi} with respect to $r$, applying the product rule to
+the first term,
+\begin{equation}
+\frac{d}{dr}\!\left(r^{2}\frac{d\phi}{dr}\right)
+= \frac{d}{dr}\!\left(r\,\frac{du}{dr} - u\right)
+= \left(\frac{du}{dr} + r\,\frac{d^{2}u}{dr^{2}}\right) - \frac{du}{dr}
+= r\,\frac{d^{2}u}{dr^{2}} .
+\label{eq:key-identity}
+\end{equation}
+
+The remaining term of \eqref{eq:spatial} becomes
+\begin{equation}
+r^{2}\phi = r^{2}\cdot\frac{u}{r} = r\,u .
+\end{equation}
+
+Substituting both results into \eqref{eq:spatial},
+\begin{equation}
+r\,\frac{d^{2}u}{dr^{2}} + \lambda\,r\,u = 0 ,
+\end{equation}
+and dividing by $r$ (valid for $r > 0$),
+\begin{equation}
+\boxed{\;
+\frac{d^{2}u}{dr^{2}} + \lambda u = 0 .
+\;}
+\label{eq:oscillator}
+\end{equation}
+
+All curvature terms have cancelled.
+
+\section{General solution and regularity at the origin}
+
+Substituting the trial form $u(r) = e^{mr}$ into \eqref{eq:oscillator}, for which
+$d^{2}u/dr^{2} = m^{2}e^{mr}$,
+\begin{equation}
+m^{2} e^{mr} + \lambda e^{mr} = 0
+\qquad \Longrightarrow \qquad
+m^{2} + \lambda = 0
+\qquad \Longrightarrow \qquad
+m = \pm\, i\sqrt{\lambda} .
+\end{equation}
+
+The corresponding real general solution is
+\begin{equation}
+u(r) = C_{1}\sin\!\left(\sqrt{\lambda}\,r\right) + C_{2}\cos\!\left(\sqrt{\lambda}\,r\right) ,
+\end{equation}
+so that
+\begin{equation}
+\phi(r)
+= C_{1}\,\frac{\sin\!\left(\sqrt{\lambda}\,r\right)}{r}
++ C_{2}\,\frac{\cos\!\left(\sqrt{\lambda}\,r\right)}{r} .
+\end{equation}
+
+Expanding each branch near the origin,
+\begin{equation}
+\frac{\sin\!\left(\sqrt{\lambda}\,r\right)}{r}
+= \sqrt{\lambda} - \frac{\lambda^{3/2} r^{2}}{6} + \cdots
+\;\xrightarrow[\;r \to 0\;]{}\;
+\sqrt{\lambda}
+\qquad \text{(finite)} ,
+\end{equation}
+\begin{equation}
+\frac{\cos\!\left(\sqrt{\lambda}\,r\right)}{r}
+= \frac{1}{r} - \frac{\lambda r}{2} + \cdots
+\;\xrightarrow[\;r \to 0\;]{}\;
+\infty
+\qquad \text{(unbounded)} .
+\end{equation}
+
+Boundedness of the concentration at the centre therefore requires
+\begin{equation}
+C_{2} = 0 ,
+\end{equation}
+and setting $C_{1} = 1$ (any overall constant is absorbed later into the expansion
+coefficients),
+\begin{equation}
+\boxed{\;
+u(r) = \sin\!\left(\sqrt{\lambda}\,r\right) ,
+\qquad
+\phi(r) = \frac{\sin\!\left(\sqrt{\lambda}\,r\right)}{r} .
+\;}
+\label{eq:eigfun}
+\end{equation}
+
+The centre condition \eqref{eq:bc0} is then satisfied automatically, since
+\begin{equation}
+\phi(r) = \sqrt{\lambda} - \frac{\lambda^{3/2} r^{2}}{6} + \cdots
+\qquad \Longrightarrow \qquad
+\frac{d\phi}{dr} = -\frac{\lambda^{3/2} r}{3} + \cdots
+\qquad \Longrightarrow \qquad
+\frac{d\phi}{dr}\bigg|_{r=0} = 0 .
+\end{equation}
+
+\section{Eigencondition}
+
+Evaluating \eqref{eq:eigfun} at the surface,
+\begin{equation}
+\phi(R) = \frac{\sin\!\left(\sqrt{\lambda}\,R\right)}{R} .
+\end{equation}
+
+Differentiating $\phi(r) = \sin\!\left(\sqrt{\lambda}\,r\right) \cdot r^{-1}$ by the
+product rule,
+\begin{equation}
+\frac{d\phi}{dr}
+= \sqrt{\lambda}\cos\!\left(\sqrt{\lambda}\,r\right)\cdot\frac{1}{r}
+- \sin\!\left(\sqrt{\lambda}\,r\right)\cdot\frac{1}{r^{2}} ,
+\end{equation}
+and combining over a common denominator,
+\begin{equation}
+\frac{d\phi}{dr}
+= \frac{\sqrt{\lambda}\,r\cos\!\left(\sqrt{\lambda}\,r\right)
+- \sin\!\left(\sqrt{\lambda}\,r\right)}{r^{2}} .
+\end{equation}
+
+At the surface,
+\begin{equation}
+\frac{d\phi}{dr}\bigg|_{r=R}
+= \frac{\sqrt{\lambda}\,R\cos\!\left(\sqrt{\lambda}\,R\right)
+- \sin\!\left(\sqrt{\lambda}\,R\right)}{R^{2}} .
+\end{equation}
+
+Substituting into the Robin condition
+$-D\,(d\phi/dr)|_{r=R} = h\,\phi(R)$,
+\begin{equation}
+-D \cdot \frac{\sqrt{\lambda}\,R\cos\!\left(\sqrt{\lambda}\,R\right)
+- \sin\!\left(\sqrt{\lambda}\,R\right)}{R^{2}}
+= h \cdot \frac{\sin\!\left(\sqrt{\lambda}\,R\right)}{R} .
+\end{equation}
+
+Multiplying both sides by $R^{2}$,
+\begin{equation}
+-D\left(\sqrt{\lambda}\,R\cos\!\left(\sqrt{\lambda}\,R\right)
+- \sin\!\left(\sqrt{\lambda}\,R\right)\right)
+= hR\sin\!\left(\sqrt{\lambda}\,R\right) .
+\end{equation}
+
+Distributing the minus sign,
+\begin{equation}
+D\sin\!\left(\sqrt{\lambda}\,R\right)
+- D\sqrt{\lambda}\,R\cos\!\left(\sqrt{\lambda}\,R\right)
+= hR\sin\!\left(\sqrt{\lambda}\,R\right) ,
+\end{equation}
+and collecting the sine terms,
+\begin{equation}
+\left(D - hR\right)\sin\!\left(\sqrt{\lambda}\,R\right)
+= D\,\sqrt{\lambda}\,R\cos\!\left(\sqrt{\lambda}\,R\right) .
+\label{eq:eig-precursor}
+\end{equation}
+
+Dividing by $\sin\!\left(\sqrt{\lambda}\,R\right)$ gives the eigencondition,
+\begin{equation}
+\boxed{\;
+D\,\sqrt{\lambda}\,R\cot\!\left(\sqrt{\lambda}\,R\right) = D - hR .
+\;}
+\label{eq:eigcond}
+\end{equation}
+
+Equation \eqref{eq:eigcond} is transcendental and admits infinitely many roots,
+\begin{equation}
+\lambda_{1} < \lambda_{2} < \lambda_{3} < \cdots ,
+\qquad
+(n-1)\pi < \sqrt{\lambda_{n}}\,R < n\pi ,
+\end{equation}
+with corresponding eigenfunctions
+\begin{equation}
+\phi_{n}(r) = \frac{\sin\!\left(\sqrt{\lambda_{n}}\,r\right)}{r} .
+\end{equation}
+
+Rearranging \eqref{eq:eig-precursor} gives the identity used repeatedly below to
+eliminate the cosine:
+\begin{equation}
+\cos\!\left(\sqrt{\lambda_{n}}\,R\right)
+= \frac{\left(D - hR\right)\sin\!\left(\sqrt{\lambda_{n}}\,R\right)}
+{D\,\sqrt{\lambda_{n}}\,R} .
+\label{eq:coselim}
+\end{equation}
+
+\section{Positivity of the eigenvalues}
+
+Multiplying \eqref{eq:spatial} by $\phi$ and integrating over the sphere,
+\begin{equation}
+\int_{0}^{R} \phi\,\frac{d}{dr}\!\left(r^{2}\frac{d\phi}{dr}\right) dr
++ \lambda \int_{0}^{R} r^{2}\phi^{2}\,dr = 0 .
+\end{equation}
+
+The first integral is treated by parts. Since
+\begin{equation}
+\frac{d}{dr}\!\left(\phi \cdot r^{2}\frac{d\phi}{dr}\right)
+= \frac{d\phi}{dr}\cdot r^{2}\frac{d\phi}{dr}
++ \phi\,\frac{d}{dr}\!\left(r^{2}\frac{d\phi}{dr}\right) ,
+\end{equation}
+it follows that
+\begin{equation}
+\int_{0}^{R} \phi\,\frac{d}{dr}\!\left(r^{2}\frac{d\phi}{dr}\right) dr
+= \left[r^{2}\phi\,\frac{d\phi}{dr}\right]_{0}^{R}
+- \int_{0}^{R} r^{2}\left(\frac{d\phi}{dr}\right)^{2} dr .
+\end{equation}
+
+Substituting and solving for $\lambda$,
+\begin{equation}
+\lambda =
+\frac{\displaystyle -\left[r^{2}\phi\,\frac{d\phi}{dr}\right]_{0}^{R}
++ \int_{0}^{R} r^{2}\left(\frac{d\phi}{dr}\right)^{2} dr}
+{\displaystyle \int_{0}^{R} r^{2}\phi^{2}\,dr} .
+\label{eq:rayleigh}
+\end{equation}
+
+At the lower limit the factor $r^{2}$ vanishes,
+\begin{equation}
+\left[r^{2}\phi\,\frac{d\phi}{dr}\right]_{r=0} = 0 ,
+\end{equation}
+while at the upper limit the Robin condition gives
+\begin{equation}
+\frac{d\phi}{dr}\bigg|_{r=R} = -\frac{h}{D}\,\phi(R) ,
+\end{equation}
+so that
+\begin{equation}
+-\left[r^{2}\phi\,\frac{d\phi}{dr}\right]_{r=R}
+= -R^{2}\phi(R)\left(-\frac{h}{D}\phi(R)\right)
+= \frac{h}{D}\,R^{2}\phi(R)^{2} \;\ge\; 0 .
+\end{equation}
+
+Both terms in the numerator of \eqref{eq:rayleigh} are non-negative and the
+denominator is strictly positive, so $\lambda \ge 0$. The value $\lambda = 0$ would
+force $r^{2}\,d\phi/dr$ constant, hence zero by regularity, hence $\phi$ constant;
+the Robin condition with $h > 0$ then forces $\phi \equiv 0$, which is not an
+eigenfunction. Therefore
+\begin{equation}
+\lambda_{n} > 0 \qquad \text{for all } n ,
+\end{equation}
+and every mode $e^{-\lambda_{n} D t}$ decays.
+
+\section{Orthogonality}
+
+Let $\phi_{n}$ and $\phi_{m}$ be eigenfunctions with $\lambda_{n} \neq \lambda_{m}$:
+\begin{align}
+\frac{d}{dr}\!\left(r^{2}\frac{d\phi_{n}}{dr}\right) + \lambda_{n} r^{2}\phi_{n} &= 0 , \\
+\frac{d}{dr}\!\left(r^{2}\frac{d\phi_{m}}{dr}\right) + \lambda_{m} r^{2}\phi_{m} &= 0 .
+\end{align}
+
+Multiplying the first by $\phi_{m}$, the second by $\phi_{n}$, and subtracting,
+\begin{equation}
+\phi_{m}\,\frac{d}{dr}\!\left(r^{2}\frac{d\phi_{n}}{dr}\right)
+- \phi_{n}\,\frac{d}{dr}\!\left(r^{2}\frac{d\phi_{m}}{dr}\right)
+= \left(\lambda_{m} - \lambda_{n}\right) r^{2}\phi_{n}\phi_{m} .
+\end{equation}
+
+The left-hand side is an exact derivative, since the cross terms cancel:
+\begin{equation}
+\frac{d}{dr}\!\left[r^{2}\!\left(\phi_{m}\frac{d\phi_{n}}{dr}
+- \phi_{n}\frac{d\phi_{m}}{dr}\right)\right]
+= \phi_{m}\,\frac{d}{dr}\!\left(r^{2}\frac{d\phi_{n}}{dr}\right)
+- \phi_{n}\,\frac{d}{dr}\!\left(r^{2}\frac{d\phi_{m}}{dr}\right) .
+\end{equation}
+
+Integrating from $0$ to $R$, the boundary term vanishes at the origin because of the
+factor $r^{2}$,
+\begin{equation}
+\left[r^{2}\!\left(\phi_{m}\frac{d\phi_{n}}{dr}
+- \phi_{n}\frac{d\phi_{m}}{dr}\right)\right]_{r=0} = 0 ,
+\end{equation}
+and vanishes at the surface because both eigenfunctions obey the same Robin
+relation,
+\begin{equation}
+\left[\phi_{m}\frac{d\phi_{n}}{dr} - \phi_{n}\frac{d\phi_{m}}{dr}\right]_{r=R}
+= \phi_{m}\left(-\frac{h}{D}\phi_{n}\right)
+- \phi_{n}\left(-\frac{h}{D}\phi_{m}\right) = 0 .
+\end{equation}
+
+Hence
+\begin{equation}
+\left(\lambda_{m} - \lambda_{n}\right)\int_{0}^{R} r^{2}\phi_{n}\phi_{m}\,dr = 0 ,
+\end{equation}
+and since $\lambda_{m} \neq \lambda_{n}$,
+\begin{equation}
+\boxed{\;
+\int_{0}^{R} \phi_{n}\,\phi_{m}\, r^{2}\,dr = 0 ,
+\qquad n \neq m .
+\;}
+\label{eq:orthog}
+\end{equation}
+
+\section{Normalization}
+
+With $\phi_{n}^{2} r^{2} = \sin^{2}\!\left(\sqrt{\lambda_{n}}\,r\right)$,
+\begin{equation}
+N_{n} = \int_{0}^{R} \phi_{n}^{2}\, r^{2}\,dr
+= \int_{0}^{R} \sin^{2}\!\left(\sqrt{\lambda_{n}}\,r\right) dr .
+\end{equation}
+
+Applying the half-angle identity,
+\begin{equation}
+N_{n}
+= \int_{0}^{R} \frac{1 - \cos\!\left(2\sqrt{\lambda_{n}}\,r\right)}{2}\,dr
+= \frac{R}{2} - \frac{\sin\!\left(2\sqrt{\lambda_{n}}\,R\right)}{4\sqrt{\lambda_{n}}} .
+\end{equation}
+
+Using $\sin(2\theta) = 2\sin\theta\cos\theta$,
+\begin{equation}
+N_{n} = \frac{R}{2}
+- \frac{\sin\!\left(\sqrt{\lambda_{n}}\,R\right)
+\cos\!\left(\sqrt{\lambda_{n}}\,R\right)}{2\sqrt{\lambda_{n}}} ,
+\end{equation}
+and eliminating the cosine with \eqref{eq:coselim},
+\begin{equation}
+N_{n} = \frac{R}{2}
+- \frac{\left(D - hR\right)\sin^{2}\!\left(\sqrt{\lambda_{n}}\,R\right)}
+{2D\,\lambda_{n} R} ,
+\end{equation}
+so that
+\begin{equation}
+\boxed{\;
+N_{n} = \frac{R}{2}\left[1
+- \frac{\left(D - hR\right)\sin^{2}\!\left(\sqrt{\lambda_{n}}\,R\right)}
+{D\,\lambda_{n} R^{2}}\right] .
+\;}
+\label{eq:norm}
+\end{equation}
+
+\section{Projection of the initial condition}
+
+Sturm--Liouville theory guarantees that the eigenfunctions form a complete basis, so
+\begin{equation}
+v(r,0) = \sum_{n \ge 1} a_{n}\,\phi_{n}(r) .
+\end{equation}
+
+Multiplying by $\phi_{n} r^{2}$ and integrating, all cross terms vanish by
+\eqref{eq:orthog}, leaving
+\begin{equation}
+\int_{0}^{R} v(r,0)\,\phi_{n}(r)\, r^{2}\,dr = a_{n} N_{n} ,
+\qquad\text{hence}\qquad
+a_{n} = \frac{1}{N_{n}}\int_{0}^{R} v(r,0)\,\phi_{n}(r)\, r^{2}\,dr .
+\end{equation}
+
+Using $v(r,0) = -w(r)$ from \eqref{eq:vdata} and
+$\phi_{n}(r)\,r^{2} = r\sin\!\left(\sqrt{\lambda_{n}}\,r\right)$,
+\begin{equation}
+a_{n} = -\frac{1}{N_{n}}
+\int_{0}^{R} w(r)\, r\sin\!\left(\sqrt{\lambda_{n}}\,r\right) dr .
+\label{eq:an-def}
+\end{equation}
+
+Writing $w(r)$ from \eqref{eq:w} in the form of a constant minus a quadratic,
+\begin{equation}
+w(r) = \left(\frac{S_{0}R}{3h} + \frac{S_{0}R^{2}}{6D}\right)
+- \frac{S_{0}}{6D}\,r^{2} ,
+\end{equation}
+the required integral separates as
+\begin{equation}
+\int_{0}^{R} w(r)\, r\sin\!\left(\sqrt{\lambda_{n}}\,r\right) dr
+= \left(\frac{S_{0}R}{3h} + \frac{S_{0}R^{2}}{6D}\right) I_{1}
+- \frac{S_{0}}{6D}\, I_{3} ,
+\label{eq:wsplit}
+\end{equation}
+where
+\begin{equation}
+I_{1} = \int_{0}^{R} r\sin\!\left(\sqrt{\lambda_{n}}\,r\right) dr ,
+\qquad
+I_{3} = \int_{0}^{R} r^{3}\sin\!\left(\sqrt{\lambda_{n}}\,r\right) dr .
+\end{equation}
+
+\section{Evaluation of the integrals}
+
+\subsection{The integral \texorpdfstring{$I_{1}$}{I1}}
+
+Integrating by parts with $u = r$ and
+$dv = \sin\!\left(\sqrt{\lambda_{n}}\,r\right) dr$,
+\begin{equation}
+I_{1}
+= \left[-\frac{r\cos\!\left(\sqrt{\lambda_{n}}\,r\right)}{\sqrt{\lambda_{n}}}\right]_{0}^{R}
++ \frac{1}{\sqrt{\lambda_{n}}}\int_{0}^{R}\cos\!\left(\sqrt{\lambda_{n}}\,r\right) dr .
+\end{equation}
+
+Evaluating both pieces,
+\begin{equation}
+I_{1}
+= -\frac{R\cos\!\left(\sqrt{\lambda_{n}}\,R\right)}{\sqrt{\lambda_{n}}}
++ \frac{1}{\sqrt{\lambda_{n}}}
+\left[\frac{\sin\!\left(\sqrt{\lambda_{n}}\,r\right)}{\sqrt{\lambda_{n}}}\right]_{0}^{R}
+= \frac{\sin\!\left(\sqrt{\lambda_{n}}\,R\right)
+- \sqrt{\lambda_{n}}\,R\cos\!\left(\sqrt{\lambda_{n}}\,R\right)}{\lambda_{n}} .
+\end{equation}
+
+From \eqref{eq:coselim},
+\begin{equation}
+\sqrt{\lambda_{n}}\,R\cos\!\left(\sqrt{\lambda_{n}}\,R\right)
+= \frac{\left(D - hR\right)\sin\!\left(\sqrt{\lambda_{n}}\,R\right)}{D} ,
+\end{equation}
+so that
+\begin{equation}
+I_{1}
+= \frac{\sin\!\left(\sqrt{\lambda_{n}}\,R\right)}{\lambda_{n}}
+\left[1 - \frac{D - hR}{D}\right] ,
+\end{equation}
+giving
+\begin{equation}
+\boxed{\;
+I_{1} = \frac{hR\,\sin\!\left(\sqrt{\lambda_{n}}\,R\right)}{D\,\lambda_{n}} .
+\;}
+\label{eq:I1}
+\end{equation}
+
+\subsection{The integral \texorpdfstring{$I_{3}$}{I3}}
+
+Integrating by parts with $u = r^{3}$,
+\begin{equation}
+\int r^{3}\sin\!\left(\sqrt{\lambda_{n}}\,r\right) dr
+= -\frac{r^{3}\cos\!\left(\sqrt{\lambda_{n}}\,r\right)}{\sqrt{\lambda_{n}}}
++ \frac{3}{\sqrt{\lambda_{n}}}\int r^{2}\cos\!\left(\sqrt{\lambda_{n}}\,r\right) dr .
+\end{equation}
+
+The remaining integral is reduced by a further integration by parts with $u = r^{2}$,
+\begin{equation}
+\int r^{2}\cos\!\left(\sqrt{\lambda_{n}}\,r\right) dr
+= \frac{r^{2}\sin\!\left(\sqrt{\lambda_{n}}\,r\right)}{\sqrt{\lambda_{n}}}
+- \frac{2}{\sqrt{\lambda_{n}}}\int r\sin\!\left(\sqrt{\lambda_{n}}\,r\right) dr ,
+\end{equation}
+and the innermost integral is
+\begin{equation}
+\int r\sin\!\left(\sqrt{\lambda_{n}}\,r\right) dr
+= -\frac{r\cos\!\left(\sqrt{\lambda_{n}}\,r\right)}{\sqrt{\lambda_{n}}}
++ \frac{\sin\!\left(\sqrt{\lambda_{n}}\,r\right)}{\lambda_{n}} .
+\end{equation}
+
+Back-substituting,
+\begin{equation}
+\int r^{2}\cos\!\left(\sqrt{\lambda_{n}}\,r\right) dr
+= \frac{r^{2}\sin\!\left(\sqrt{\lambda_{n}}\,r\right)}{\sqrt{\lambda_{n}}}
++ \frac{2r\cos\!\left(\sqrt{\lambda_{n}}\,r\right)}{\lambda_{n}}
+- \frac{2\sin\!\left(\sqrt{\lambda_{n}}\,r\right)}{\lambda_{n}^{3/2}} ,
+\end{equation}
+and therefore
+\begin{equation}
+\int r^{3}\sin\!\left(\sqrt{\lambda_{n}}\,r\right) dr
+= -\frac{r^{3}\cos\!\left(\sqrt{\lambda_{n}}\,r\right)}{\sqrt{\lambda_{n}}}
++ \frac{3r^{2}\sin\!\left(\sqrt{\lambda_{n}}\,r\right)}{\lambda_{n}}
++ \frac{6r\cos\!\left(\sqrt{\lambda_{n}}\,r\right)}{\lambda_{n}^{3/2}}
+- \frac{6\sin\!\left(\sqrt{\lambda_{n}}\,r\right)}{\lambda_{n}^{2}} .
+\end{equation}
+
+Evaluating between $0$ and $R$, where every term vanishes at the lower limit, and
+grouping the sine and cosine contributions,
+\begin{equation}
+I_{3}
+= \left(\frac{3R^{2}}{\lambda_{n}} - \frac{6}{\lambda_{n}^{2}}\right)
+\sin\!\left(\sqrt{\lambda_{n}}\,R\right)
+- \left(\frac{R^{3}}{\sqrt{\lambda_{n}}} - \frac{6R}{\lambda_{n}^{3/2}}\right)
+\cos\!\left(\sqrt{\lambda_{n}}\,R\right) .
+\end{equation}
+
+Eliminating the cosine with \eqref{eq:coselim},
+\begin{equation}
+- \left(\frac{R^{3}}{\sqrt{\lambda_{n}}} - \frac{6R}{\lambda_{n}^{3/2}}\right)
+\cos\!\left(\sqrt{\lambda_{n}}\,R\right)
+= -\frac{\left(D - hR\right)\sin\!\left(\sqrt{\lambda_{n}}\,R\right)}{D}
+\left(\frac{R^{2}}{\lambda_{n}} - \frac{6}{\lambda_{n}^{2}}\right) ,
+\end{equation}
+so that
+\begin{equation}
+I_{3} = \sin\!\left(\sqrt{\lambda_{n}}\,R\right)
+\left[\frac{R^{2}}{\lambda_{n}}\left(3 - \frac{D - hR}{D}\right)
+- \frac{6}{\lambda_{n}^{2}}\left(1 - \frac{D - hR}{D}\right)\right] .
+\end{equation}
+
+Simplifying the two bracketed coefficients,
+\begin{equation}
+3 - \frac{D - hR}{D} = \frac{2D + hR}{D} ,
+\qquad
+1 - \frac{D - hR}{D} = \frac{hR}{D} ,
+\end{equation}
+gives
+\begin{equation}
+\boxed{\;
+I_{3} = \sin\!\left(\sqrt{\lambda_{n}}\,R\right)
+\left[\frac{\left(2D + hR\right)R^{2}}{D\,\lambda_{n}}
+- \frac{6hR}{D\,\lambda_{n}^{2}}\right] .
+\;}
+\label{eq:I3}
+\end{equation}
+
+\section{Expansion coefficients}
+
+Substituting \eqref{eq:I1} and \eqref{eq:I3} into \eqref{eq:wsplit} and grouping by
+powers of $\lambda_{n}$,
+\begin{align}
+\int_{0}^{R} w(r)\, r\sin\!\left(\sqrt{\lambda_{n}}\,r\right) dr
+&= \frac{\sin\!\left(\sqrt{\lambda_{n}}\,R\right)}{\lambda_{n}}
+\left[\left(\frac{S_{0}R}{3h} + \frac{S_{0}R^{2}}{6D}\right)\frac{hR}{D}
+- \frac{S_{0}}{6D}\cdot\frac{\left(2D + hR\right)R^{2}}{D}\right] \notag \\
+&\quad + \frac{S_{0}}{6D}\cdot
+\frac{6hR\,\sin\!\left(\sqrt{\lambda_{n}}\,R\right)}{D\,\lambda_{n}^{2}} .
+\label{eq:grouped}
+\end{align}
+
+The bracketed term vanishes identically. Expanding its first part,
+\begin{equation}
+\left(\frac{S_{0}R}{3h} + \frac{S_{0}R^{2}}{6D}\right)\frac{hR}{D}
+= \frac{S_{0}R^{2}}{3D} + \frac{S_{0}hR^{3}}{6D^{2}} ,
+\end{equation}
+and its second part,
+\begin{equation}
+\frac{S_{0}}{6D}\cdot\frac{\left(2D + hR\right)R^{2}}{D}
+= \frac{2S_{0}R^{2}D}{6D^{2}} + \frac{S_{0}hR^{3}}{6D^{2}}
+= \frac{S_{0}R^{2}}{3D} + \frac{S_{0}hR^{3}}{6D^{2}} ,
+\end{equation}
+so that
+\begin{equation}
+\left(\frac{S_{0}R}{3h} + \frac{S_{0}R^{2}}{6D}\right)\frac{hR}{D}
+- \frac{S_{0}}{6D}\cdot\frac{\left(2D + hR\right)R^{2}}{D} = 0 .
+\end{equation}
+
+This cancellation occurs only when the steady state \eqref{eq:w} and the
+eigencondition \eqref{eq:eigcond} are mutually consistent. What remains of
+\eqref{eq:grouped} is
+\begin{equation}
+\int_{0}^{R} w(r)\, r\sin\!\left(\sqrt{\lambda_{n}}\,r\right) dr
+= \frac{S_{0}}{6D}\cdot
+\frac{6hR\,\sin\!\left(\sqrt{\lambda_{n}}\,R\right)}{D\,\lambda_{n}^{2}}
+= \frac{hR\,S_{0}\sin\!\left(\sqrt{\lambda_{n}}\,R\right)}{D^{2}\,\lambda_{n}^{2}} ,
+\end{equation}
+and substituting into \eqref{eq:an-def},
+\begin{equation}
+\boxed{\;
+a_{n} = -\frac{hR\,S_{0}\,\sin\!\left(\sqrt{\lambda_{n}}\,R\right)}
+{D^{2}\,\lambda_{n}^{2}\,N_{n}} .
+\;}
+\label{eq:an}
+\end{equation}
+
+\section{Solution with the source active}
+
+Reassembling $c = w + v$ with \eqref{eq:w}, \eqref{eq:eigfun}, \eqref{eq:timeeq} and
+\eqref{eq:an},
+\begin{equation}
+\boxed{\;
+c(r,t) = \frac{S_{0}R}{3h} + \frac{S_{0}}{6D}\left(R^{2} - r^{2}\right)
++ \sum_{n \ge 1} a_{n}\,
+\frac{\sin\!\left(\sqrt{\lambda_{n}}\,r\right)}{r}\;
+e^{-\lambda_{n} D t} ,
+\qquad 0 \le t \le t_{c} .
+\;}
+\label{eq:phase1}
+\end{equation}
+
+At $t = 0$ every exponential equals one and the series reproduces $-w(r)$ by
+construction, so the initial condition \eqref{eq:ic} is met exactly. As
+$t \to \infty$ every mode decays and the profile relaxes to the steady parabola
+\eqref{eq:w}.
+
+The instantaneous release rate through the surface is
+\begin{equation}
+\dot{m}(t) = 4\pi R^{2}\, h\, c(R,t)
+\qquad \left(\mathrm{mol\ s^{-1}}\right) ,
+\end{equation}
+and the slowest mode sets the characteristic equilibration time
+\begin{equation}
+\tau_{1} = \frac{1}{\lambda_{1} D} .
+\end{equation}
+
+\section{Solution after source switch-off}
+
+For $t > t_{c}$ the governing equation is homogeneous with unchanged boundary
+conditions,
+\begin{equation}
+\frac{\partial c}{\partial t}
+= \frac{D}{r^{2}}\,\frac{\partial}{\partial r}\!\left(r^{2}\frac{\partial c}{\partial r}\right) ,
+\qquad t > t_{c} ,
+\end{equation}
+so the same eigenbasis applies:
+\begin{equation}
+c(r,t) = \sum_{n \ge 1} b_{n}\,
+\frac{\sin\!\left(\sqrt{\lambda_{n}}\,r\right)}{r}\;
+e^{-\lambda_{n} D\,(t - t_{c})} .
+\end{equation}
+
+The new initial state is the phase-one solution evaluated at $t_{c}$. Since the
+projection of $w$ onto the eigenbasis is $-a_{n}$ by the definition
+\eqref{eq:an-def},
+\begin{equation}
+w(r) = -\sum_{n \ge 1} a_{n}\,\phi_{n}(r) ,
+\end{equation}
+and therefore
+\begin{equation}
+c(r,t_{c})
+= w(r) + \sum_{n \ge 1} a_{n}\,\phi_{n}(r)\, e^{-\lambda_{n} D t_{c}}
+= \sum_{n \ge 1}\left(-a_{n} + a_{n} e^{-\lambda_{n} D t_{c}}\right)\phi_{n}(r) ,
+\end{equation}
+giving
+\begin{equation}
+\boxed{\;
+b_{n} = a_{n}\left(e^{-\lambda_{n} D t_{c}} - 1\right) .
+\;}
+\label{eq:bn}
+\end{equation}
+
+No additional integrals are required: orthogonality of the eigenbasis transfers the
+phase-one state directly. Since $\lambda_{n} > 0$, the inventory decays
+exponentially after shutdown, with the late-time behaviour governed by
+$\lambda_{1}$.
+
+\section{Extension to the five-layer particle}
+
+The full TRISO geometry comprises five concentric layers (kernel, buffer, IPyC, SiC,
+OPyC) with radii
+\begin{equation}
+0 = r_{0} < r_{1} < r_{2} < r_{3} < r_{4} < r_{5} = R
+\end{equation}
+and piecewise constant diffusivities $D_{i}$. In each layer,
+\begin{equation}
+\frac{\partial c}{\partial t}
+= \frac{D_{i}}{r^{2}}\,\frac{\partial}{\partial r}\!\left(r^{2}\frac{\partial c}{\partial r}\right)
++ S_{i} ,
+\qquad i = 1,\dots,5 ,
+\end{equation}
+with the source confined to the kernel,
+\begin{equation}
+S_{1} = S_{0} ,
+\qquad
+S_{2} = S_{3} = S_{4} = S_{5} = 0 .
+\end{equation}
+
+\paragraph{Interface conditions.}
+Both the concentration and the radial flux are continuous at each interface:
+\begin{equation}
+c\!\left(r_{i}^{-},t\right) = c\!\left(r_{i}^{+},t\right) ,
+\qquad
+D_{i}\,\frac{\partial c}{\partial r}\bigg|_{r = r_{i}^{-}}
+= D_{i+1}\,\frac{\partial c}{\partial r}\bigg|_{r = r_{i}^{+}} ,
+\qquad i = 1,\dots,4 .
+\label{eq:interface}
+\end{equation}
+
+\paragraph{Composite spatial problem.}
+Writing $D(r)$ for the piecewise diffusivity, the spatial problem becomes
+\begin{equation}
+\frac{d}{dr}\!\left(D(r)\, r^{2}\frac{d\phi}{dr}\right) + \lambda\, r^{2}\phi = 0 ,
+\end{equation}
+with time factor $e^{-\lambda t}$, the diffusivity now residing inside the
+derivative rather than in the time equation. Flux continuity \eqref{eq:interface} is
+exactly continuity of $D(r)\,r^{2}\,d\phi/dr$, which is the condition under which
+self-adjointness, orthogonality
+\begin{equation}
+\int_{0}^{R} \phi_{n}\,\phi_{m}\, r^{2}\,dr = 0 ,
+\qquad n \neq m ,
+\end{equation}
+and realness of the spectrum survive the material discontinuities.
+
+\paragraph{Layer-wise solution.}
+With $u = r\phi$ in each layer,
+\begin{equation}
+u^{(i)}(r) = \alpha_{i}\sin\!\left(\sqrt{\frac{\lambda}{D_{i}}}\;r\right)
++ \beta_{i}\cos\!\left(\sqrt{\frac{\lambda}{D_{i}}}\;r\right) ,
+\qquad
+\beta_{1} = 0
+\end{equation}
+by regularity at the origin. The remaining constants satisfy eight interface
+equations from \eqref{eq:interface} together with the outer Robin condition, forming
+a homogeneous linear system conveniently assembled as a product of $2 \times 2$
+transfer matrices across the layers. Nontrivial solutions exist only where the
+system determinant vanishes,
+\begin{equation}
+\det M(\lambda) = 0 ,
+\end{equation}
+which is the transcendental eigencondition generalizing \eqref{eq:eigcond}. The
+steady-state split, the projection onto the eigenbasis, and the switch-off treatment
+\eqref{eq:bn} then carry over unchanged from the single-layer case.
+
+\end{document}
