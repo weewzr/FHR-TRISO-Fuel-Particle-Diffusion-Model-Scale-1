@@ -223,32 +223,64 @@ $$
 v(r,t) = \phi(r)\,T(t)
 $$
 
-Differentiating with respect to $t$, with $r$ held fixed — the factor $\phi(r)$ contains no $t$ and behaves as a constant multiplier:
+Every occurrence of $v$ below is **replaced** by this product, and the derivatives are then taken on the result.
+
+### Why one factor leaves the derivative and the other does not
+
+Taking $\partial/\partial r$ means holding $t$ fixed. Freeze $t$ at any particular value and $T(t)$ becomes a *specific number* — for instance, if $t$ is frozen at $3$ and $T(3) = 0.5$, then at that instant
 
 $$
-\frac{\partial v}{\partial t} = \phi(r)\,\frac{dT}{dt}
+v(r,3) = \phi(r)\times 0.5
+\qquad\Longrightarrow\qquad
+\frac{d}{dr}\Big(0.5\,\phi(r)\Big) = 0.5\,\frac{d\phi}{dr}
 $$
 
-Differentiating with respect to $r$, with $t$ held fixed — the factor $T(t)$ contains no $r$ and behaves as a constant multiplier:
+and the numeric factor slides straight out. Freezing $t$ elsewhere gives a different number, but it still slides out, so in general the factor carried outside is $T(t)$.
+
+The factor $\phi(r)$ cannot be carried out, because it is the thing being differentiated.
+
+### The derivatives
+
+Differentiating with respect to $t$, with $r$ held fixed — the factor $\phi(r)$ contains no $t$ and is carried outside:
 
 $$
-\frac{\partial v}{\partial r} = \frac{d\phi}{dr}\,T(t)
+\frac{\partial v}{\partial t}
+= \frac{\partial}{\partial t}\Big[\phi(r)\,T(t)\Big]
+= \phi(r)\,\frac{dT}{dt}
 $$
 
-Multiplying by $r^{2}$:
+Differentiating with respect to $r$, with $t$ held fixed — the factor $T(t)$ contains no $r$ and is carried outside:
 
 $$
-r^{2}\frac{\partial v}{\partial r} = r^{2}\frac{d\phi}{dr}\,T(t)
+\frac{\partial v}{\partial r}
+= \frac{\partial}{\partial r}\Big[\phi(r)\,T(t)\Big]
+= T(t)\cdot\frac{d}{dr}\Big[\phi(r)\Big]
+= \frac{d\phi}{dr}\,T(t)
 $$
 
-Differentiating once more with respect to $r$, again factoring $T(t)$ out of the $r$-derivative:
+Multiplying by $r^{2}$ — this is multiplication only, nothing is differentiated:
+
+$$
+r^{2}\frac{\partial v}{\partial r} = r^{2}\,\frac{d\phi}{dr}\,T(t)
+$$
+
+Applying the outer $\partial/\partial r$ to that whole quantity, whose contents split as
+
+$$
+\underbrace{r^{2}\,\frac{d\phi}{dr}}_{\text{all the } r \text{ dependence}}
+\;\times\;
+\underbrace{T(t)}_{\text{a number once } t \text{ is frozen}}
+$$
+
+the factor $T(t)$ is again carried outside:
 
 $$
 \frac{\partial}{\partial r}\!\left(r^{2}\frac{\partial v}{\partial r}\right)
+= T(t)\cdot\frac{d}{dr}\!\left(r^{2}\frac{d\phi}{dr}\right)
 = \frac{d}{dr}\!\left(r^{2}\frac{d\phi}{dr}\right) T(t)
 $$
 
-> This is where the notation changes. The quantity $r^{2}\,d\phi/dr$ contains no $t$ whatsoever, so the derivative acting on it is ordinary rather than partial.
+> This is where the notation changes. Nothing has been computed — $v$ was replaced by $\phi(r)T(t)$ and the $t$-part carried outside untouched. What remains inside the bracket, $r^{2}\,d\phi/dr$, contains no $t$ whatsoever, so the derivative acting on it is ordinary rather than partial.
 
 Substituting into the transient equation:
 
